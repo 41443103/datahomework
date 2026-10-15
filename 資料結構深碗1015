@@ -1,0 +1,124 @@
+```cpp
+#include <iostream>
+using namespace std;
+class game
+{
+private:
+	string name;
+	int hp;
+	int level;
+public:
+	game(string n, int h, int l)
+	{
+		name = n;
+		hp = h;
+		level = l;
+		if (hp < 0)
+		{
+			hp = 0;
+		}		
+		else if (hp > 100)
+		{
+			hp = 100;
+		}
+	}
+	void damage(int value) //受到傷害
+	{
+		hp -= value;
+		if (hp < 0)
+		{
+			hp = 0;
+		}
+	}
+	void heal(int value) //回復生命值
+	{
+		hp += value;
+		if (hp > 100)
+		{
+			hp = 100;
+		}
+	}
+	void levelUp()  // 升級
+
+	{
+		level++;
+		hp = 100;
+	}
+	void show() //顯示角色資料
+	{
+		cout << "Name: " << name<<endl;
+		cout << "HP: " << hp<<endl;
+		cout << "Level: "  << level<<endl;
+	}
+};
+
+int main()
+{
+	int n;
+	game* games[20];
+	cout << "角色人數:";
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		string name;
+		int h, l;
+		cout << "===角色"<<i+1<<" === \n名稱:";
+		cin >> name;
+		cout << "血量:";
+		cin >> h;
+		cout << "等級:";
+		cin >> l;
+		games[i]=new game(name, h, l);
+	}
+	int a;
+	while (1)
+	{
+		cout << "請選擇角色編號行動:";
+		int b;
+		cin >> b;
+		cout << "===選單===\n";
+		cout << "1.扣血\n2.回血\n3.升級\n4.角色資料\n0.結束程式\n請輸入:\n";
+		cin >> a;
+		int t;
+		if (a == 1)
+		{
+			cout << "輸入傷害值:";
+			cin >> t;
+			games[b-1]->damage(t);
+			games[b - 1]->show();
+		}
+		else if (a == 2)
+		{
+			cout << "輸入回血值:";
+			cin >> t;
+			games[b - 1]->heal(t);
+			games[b - 1]->show();
+		}
+		else if (a == 3)
+		{
+			cout << "升級成功\n";
+			games[b - 1]->levelUp();
+			games[b - 1]->show();
+		}
+		else if (a == 4)
+		{
+			games[b - 1]->show();
+		}
+		else if (a == 0)
+		{
+			cout << "感謝遊玩!";
+
+			break;
+		}
+		else
+		{
+			cout << "無效 請重新輸入:";
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		delete games[i];
+	}
+	return 0;
+}
+```
